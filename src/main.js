@@ -1,11 +1,24 @@
 import BoardPresenter from './presenter/board-presenter.js';
 
+import MockService from './service/mock-service.js';
+import DestinationsModel from './model/destinations-model.js';
+import OffersModel from './model/offers-model.js';
+import PointModel from './model/point-model.js';
+
 const bodyElement = document.querySelector('body');
 const mainElement = bodyElement.querySelector('.page-main');
 const eventListElement = mainElement.querySelector('.trip-events');
 
-const boardPresenter = new BoardPresenter({
-  container: eventListElement
-});
+const mockService = new MockService();
+const destinationsModel = new DestinationsModel(mockService);
+const offersModel = new OffersModel(mockService);
+const pointModel = new PointModel(mockService);
+
+const boardPresenter = new BoardPresenter(
+  eventListElement,
+  destinationsModel,
+  offersModel,
+  pointModel
+);
 
 boardPresenter.init();
