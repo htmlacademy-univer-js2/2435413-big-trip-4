@@ -1,22 +1,34 @@
 import { createElement } from '../render.js';
 
-const createTripInfoTemplate = () => `
-  <section class="trip-main__trip-info  trip-info">
-  <div class="trip-info__main">
-    <h1 class="trip-info__title">Amsterdam &mdash; Chamonix &mdash; Geneva</h1>
+const createTripInfoTitle = (destinations) => destinations.map((d) => d.name).join(' &mdash; ');
 
-    <p class="trip-info__dates">Mar 18&nbsp;&mdash;&nbsp;20</p>
-  </div>
+const createTripInfoTemplate = (destinations) => `<section class="trip-main__trip-info  trip-info">
+<div class="trip-info__main">
+  <h1 class="trip-info__title">${createTripInfoTitle(destinations)}</h1>
 
-  <p class="trip-info__cost">
-    Total: &euro;&nbsp;<span class="trip-info__cost-value">1230</span>
-  </p>
-  </section>`;
+  <p class="trip-info__dates">Mar 18&nbsp;&mdash;&nbsp;20</p>
+</div>
+
+<p class="trip-info__cost">
+  Total: &euro;&nbsp;<span class="trip-info__cost-value">1230</span>
+</p>
+</section>`;
 
 export default class TripInfoView {
-  getTemplate() {
-    return createTripInfoTemplate();
+  constructor(destinationsModel, points) {
+    this.points = points;
+    this.destinationsModel = destinationsModel;
   }
+
+  getTemplate = () => {
+    const destinations = [];
+
+    for (let i = 0; i < this.points.length; i++) {
+      destinations.push(this.destinationsModel.getById(this.points[i].destination));
+    }
+
+    return createTripInfoTemplate(destinations);
+  };
 
   getElement() {
     if (!this.element) {
