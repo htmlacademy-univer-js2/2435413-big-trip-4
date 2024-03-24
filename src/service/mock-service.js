@@ -5,21 +5,27 @@ import { getRandomArrayElement, getRandomIntegerFromRange } from '../utils.js';
 import { COUNT_POINTS, CountOffers, TYPE_POINT } from '../const.js';
 
 export default class MockService {
-  destinations = [];
-  offers = [];
-  points = [];
+  #destinations = [];
+  #offers = [];
+  #points = [];
 
   constructor() {
-    this.destinations = this.generateDestinations();
-    this.offers = this.generateOffers();
-    this.points = this.generatePoints();
+    this.#destinations = this.generateDestinations();
+    this.#offers = this.generateOffers();
+    this.#points = this.generatePoints();
   }
 
-  getDestinations = () => this.destinations;
+  get destinations() {
+    return this.#destinations;
+  }
 
-  getOffers = () => this.offers;
+  get offers() {
+    return this.#offers;
+  }
 
-  getPoints = () => this.points;
+  get points() {
+    return this.#points;
+  }
 
   generateDestinations = () => generateMockDestinations();
 

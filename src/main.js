@@ -1,4 +1,4 @@
-import BoardPresenter from './presenter/board-presenter.js';
+import TripPresenter from './presenter/trip-presenter.js';
 
 import MockService from './service/mock-service.js';
 import DestinationsModel from './model/destinations-model.js';
@@ -14,11 +14,11 @@ const destinationsModel = new DestinationsModel(mockService);
 const offersModel = new OffersModel(mockService);
 const pointModel = new PointModel(mockService);
 
-const boardPresenter = new BoardPresenter(
+const tripPresenter = new TripPresenter(
   eventListElement,
   destinationsModel,
   offersModel,
   pointModel
 );
 
-boardPresenter.init();
+tripPresenter.init();

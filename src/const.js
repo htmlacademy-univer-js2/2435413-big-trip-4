@@ -47,7 +47,7 @@ export const DESCRIPTIONS = [
 
 export const TITLE_OFFERS = ['Upgrade to a business class', 'Add luggage', 'Add meal', 'Choose seats', 'Travel by train'];
 
-export const COUNT_POINTS = 4;
+export const COUNT_POINTS = 3;
 
 export const MILLISECONDS_IN_DAY = 86400000;
 
