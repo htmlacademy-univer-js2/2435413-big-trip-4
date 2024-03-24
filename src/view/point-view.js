@@ -1,4 +1,4 @@
-import { createElement } from '../render.js';
+import AbstractView from '../framework/view/abstract-view.js';
 import { formatToShortDate, getDuration, formatToShortTime } from '../utils.js';
 
 const createFavoriteButtonTemplate = (isFavorite) => `
@@ -54,24 +54,22 @@ const createPointTemplate = (point, destination, offers) => `
   </div>
   </li>`;
 
-export default class PointView {
-  constructor(point, pointDestination, pointOffers) {
-    this.point = point;
-    this.pointDestination = pointDestination;
-    this.pointOffers = pointOffers;
+export default class PointView extends AbstractView {
+  #point = null;
+  #pointDestination = null;
+  #pointOffers = null;
+
+  constructor(point, destination, offers, onRollupButtonClick) {
+    super();
+
+    this.#point = point;
+    this.#pointDestination = destination;
+    this.#pointOffers = offers;
+
+    this.element.querySelector('.event__rollup-btn').addEventListener('click', onRollupButtonClick);
   }
 
-  getTemplate = () => createPointTemplate(this.point, this.pointDestination, this.pointOffers);
-
-  getElement() {
-    if (!this.element) {
-      this.element = createElement(this.getTemplate());
-    }
-
-    return this.element;
-  }
-
-  removeElement() {
-    this.element = null;
+  get template() {
+    return createPointTemplate(this.#point, this.#pointDestination, this.#pointOffers);
   }
 }

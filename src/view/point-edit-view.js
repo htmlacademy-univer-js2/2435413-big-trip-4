@@ -1,5 +1,5 @@
-import { createElement } from '../render.js';
 import { POINT_EMPTY, TYPE_POINT, CITIES } from '../const.js';
+import AbstractView from '../framework/view/abstract-view.js';
 
 const createPicturesTemplate = (pictures) => {
   let result = '';
@@ -99,6 +99,9 @@ const createPointEditTemplate = (point, destination, offers) => `<li class="trip
 
       <button class="event__save-btn  btn  btn--blue" type="submit">Save</button>
       <button class="event__reset-btn" type="reset">Cancel</button>
+      <button class="event__rollup-btn" type="button">
+        <span class="visually-hidden">Open event</span>
+      </button>
     </header>
     <section class="event__details">
       <section class="event__section  event__section--offers">
@@ -123,24 +126,24 @@ const createPointEditTemplate = (point, destination, offers) => `<li class="trip
   </form>
   </li>`;
 
-export default class PointEditView {
-  constructor(point = POINT_EMPTY, pointDestination, pointOffers) {
-    this.point = point;
-    this.pointDestination = pointDestination;
-    this.pointOffers = pointOffers;
+export default class PointEditView extends AbstractView {
+  #point = null;
+  #pointDestination = null;
+  #pointOffers = null;
+
+  constructor(point = POINT_EMPTY, pointDestination, pointOffers, onResetButtonClick, onFormSubmit) {
+    super();
+
+    this.#point = point;
+    this.#pointDestination = pointDestination;
+    this.#pointOffers = pointOffers;
+
+    this.element.querySelector('.event__reset-btn').addEventListener('click', onResetButtonClick);
+    this.element.querySelector('.event__rollup-btn').addEventListener('click', onResetButtonClick);
+    this.element.querySelector('form').addEventListener('submit', onFormSubmit);
   }
 
-  getTemplate = () => createPointEditTemplate(this.point, this.pointDestination, this.pointOffers);
-
-  getElement() {
-    if (!this.element) {
-      this.element = createElement(this.getTemplate());
-    }
-
-    return this.element;
-  }
-
-  removeElement() {
-    this.element = null;
+  get template() {
+    return createPointEditTemplate(this.#point, this.#pointDestination, this.#pointOffers);
   }
 }

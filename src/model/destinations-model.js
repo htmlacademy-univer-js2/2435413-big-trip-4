@@ -1,10 +1,13 @@
 export default class DestinationsModel {
+  #service = null;
+  #destinations = null;
+
   constructor(service) {
-    this.service = service;
-    this.destinations = this.service.getDestinations();
+    this.#service = service;
+    this.#destinations = this.#service.destinations;
   }
 
-  get = () => this.destinations;
+  get = () => this.#destinations;
 
-  getById = (id) => this.destinations.find((destination) => destination.id === id);
+  getById = (id) => this.#destinations.find((destination) => destination.id === id);
 }

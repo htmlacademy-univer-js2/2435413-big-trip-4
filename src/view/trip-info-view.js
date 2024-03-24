@@ -1,4 +1,4 @@
-import { createElement } from '../render.js';
+import AbstractView from '../framework/view/abstract-view.js';
 
 const createTripInfoTitle = (destinations) => destinations.map((d) => d.name).join(' &mdash; ');
 
@@ -14,31 +14,20 @@ const createTripInfoTemplate = (destinations) => `<section class="trip-main__tri
 </p>
 </section>`;
 
-export default class TripInfoView {
+export default class TripInfoView extends AbstractView{
+  #points = null;
+  #destinationsModel = null;
+
   constructor(destinationsModel, points) {
-    this.points = points;
-    this.destinationsModel = destinationsModel;
+    super();
+
+    this.#points = points;
+    this.#destinationsModel = destinationsModel;
   }
 
-  getTemplate = () => {
-    const destinations = [];
-
-    for (let i = 0; i < this.points.length; i++) {
-      destinations.push(this.destinationsModel.getById(this.points[i].destination));
-    }
-
+  get template() {
+    const destinations = this.#points.map((point) => (
+      this.#destinationsModel.getById(point.destination)));
     return createTripInfoTemplate(destinations);
-  };
-
-  getElement() {
-    if (!this.element) {
-      this.element = createElement(this.getTemplate());
-    }
-
-    return this.element;
-  }
-
-  removeElement() {
-    this.element = null;
   }
 }
