@@ -1,3 +1,8 @@
+export const CountPoints = {
+  MIN: 0,
+  MAX: 4
+};
+
 export const CountPictures = {
   MIN: 0,
   MAX: 5
@@ -34,6 +39,17 @@ export const DateFormat = {
   SHORT: 'MMM DD'
 };
 
+export const FILTERS = ['Everything', 'Future', 'Present', 'Past'];
+
+export const Filters = {
+  'Everything': 'Click New Event to create your first point',
+  'Future': 'There are no future events now',
+  'Present': 'There are no present events now',
+  'Past': 'There are no past events now'
+};
+
+export const SORTS = ['Day', 'Event', 'Time', 'Price', 'Offers'];
+
 export const TYPE_POINT = ['Taxi', 'Bus', 'Train', 'Ship', 'Drive', 'Flight', 'Check-in', 'Sightseeing', 'Restaurant'];
 
 export const CITIES = ['Abing', 'Bela', 'Santana do Livramento', 'Queimados', 'Yima', 'Cizre', 'Hwado'];
@@ -46,8 +62,6 @@ export const DESCRIPTIONS = [
   'Nullam nunc ex, convallis sed finibus eget, sollicitudin eget ante.'];
 
 export const TITLE_OFFERS = ['Upgrade to a business class', 'Add luggage', 'Add meal', 'Choose seats', 'Travel by train'];
-
-export const COUNT_POINTS = 3;
 
 export const MILLISECONDS_IN_DAY = 86400000;
 

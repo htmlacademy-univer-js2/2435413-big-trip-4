@@ -4,8 +4,11 @@ import PointEditView from '../view/point-edit-view.js';
 import PointView from '../view/point-view.js';
 import SortView from '../view/sort-view.js';
 import TripInfoView from '../view/trip-info-view.js';
+import EmptyListView from '../view/empty-list.js';
 
 import { render, RenderPosition, replace } from '../framework/render.js';
+import { getRandomArrayElement } from '../utils.js';
+import { FILTERS } from '../const.js';
 
 const bodyElement = document.querySelector('body');
 const headerElement = bodyElement.querySelector('.page-header');
@@ -71,20 +74,29 @@ export default class TripPresenter {
   };
 
   init() {
-    render(new TripInfoView(
-      this.#destinationsModel,
-      this.#points), tripInfoElement, RenderPosition.AFTERBEGIN);
+    const filter = getRandomArrayElement(FILTERS);
 
-    render(new FilterView(), filterElement);
+    render(new FilterView(filter), filterElement);
 
-    render(this.#sortComponent, this.#container);
-    render(this.#eventListComponent, this.#container);
+    if (this.#points.length) {
+      render(new TripInfoView(
+        this.#points.map((point) => (
+          this.#destinationsModel.getById(point.destination))),
+        this.#points), tripInfoElement, RenderPosition.AFTERBEGIN);
 
-    for (let i = 0; i < this.#points.length; i++) {
-      this.#renderPoint(
-        this.#points[i],
-        this.#destinationsModel.getById(this.#points[i].destination),
-        this.#offersModel.getByType(this.#points[i].type));
+      render(this.#sortComponent, this.#container);
+      render(this.#eventListComponent, this.#container);
+
+      for (let i = 0; i < this.#points.length; i++) {
+        this.#renderPoint(
+          this.#points[i],
+          this.#destinationsModel.getById(this.#points[i].destination),
+          this.#offersModel.getByType(this.#points[i].type));
+      }
+    }
+    else {
+      render(this.#eventListComponent, this.#container);
+      render(new EmptyListView(filter), this.#eventListComponent.element);
     }
   }
 }

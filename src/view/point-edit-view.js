@@ -4,8 +4,14 @@ import AbstractView from '../framework/view/abstract-view.js';
 const createPicturesTemplate = (pictures) => {
   let result = '';
 
-  for (let i = 0; i < pictures.length; i++) {
-    result += `<img class="event__photo" src=${pictures[i].src} alt="Event photo">`;
+  if (pictures.length) {
+    pictures.forEach((picture) => (result += `<img class="event__photo" src=${picture.src} alt="Event photo">`));
+
+    return `<div class="event__photos-container">
+              <div class="event__photos-tape">
+                ${result}
+              </div>
+            </div>`;
   }
 
   return result;
@@ -15,13 +21,14 @@ const createEventTypeTemplate = () => {
   let result = '';
   let typeL = '';
 
-  for (let i = 0; i < TYPE_POINT.length; i++) {
-    typeL = TYPE_POINT[i].toLowerCase();
+  TYPE_POINT.forEach((type, index) => {
+    typeL = type.toLowerCase();
+
     result += `<div class="event__type-item">
-    <input id="event-type-${typeL}-${i + 1}" class="event__type-input  visually-hidden" type="radio" name="event-type" value="${typeL}">
-    <label class="event__type-label  event__type-label--${typeL}" for="event-type-${typeL}-${i + 1}">${TYPE_POINT[i]}</label>
+    <input id="event-type-${typeL}-${index + 1}" class="event__type-input  visually-hidden" type="radio" name="event-type" value="${typeL}">
+    <label class="event__type-label  event__type-label--${typeL}" for="event-type-${typeL}-${index + 1}">${TYPE_POINT[index]}</label>
   </div>`;
-  }
+  });
 
   return result;
 };
@@ -29,9 +36,7 @@ const createEventTypeTemplate = () => {
 const createDestinationList = () => {
   let result = '';
 
-  for (let i = 0; i < CITIES.length; i++) {
-    result += `<option value="${CITIES[i].name}"></option>`;
-  }
+  CITIES.forEach((city) => (result += `<option value="${city.name}"></option>`));
 
   return result;
 };
@@ -39,16 +44,16 @@ const createDestinationList = () => {
 const createOffersTemplate = (offers) => {
   let result = '';
 
-  for (let i = 0; i < offers.length; i++) {
+  offers.forEach((offer, index) => {
     result += `<div class="event__offer-selector">
-    <input class="event__offer-checkbox  visually-hidden" id="event-offer-luggage-${i + 1}" type="checkbox" name="event-offer-luggage" checked>
-    <label class="event__offer-label" for="event-offer-luggage-${i + 1}">
-      <span class="event__offer-title">${offers[i].title}</span>
+    <input class="event__offer-checkbox  visually-hidden" id="event-offer-luggage-${index + 1}" type="checkbox" name="event-offer-luggage" checked>
+    <label class="event__offer-label" for="event-offer-luggage-${index + 1}">
+      <span class="event__offer-title">${offer.title}</span>
       &plus;&euro;&nbsp;
-      <span class="event__offer-price">${offers[i].price}</span>
+      <span class="event__offer-price">${offer.price}</span>
     </label>
   </div>`;
-  }
+  });
 
   return result;
 };
@@ -115,12 +120,7 @@ const createPointEditTemplate = (point, destination, offers) => `<li class="trip
       <section class="event__section  event__section--destination">
         <h3 class="event__section-title  event__section-title--destination">Destination</h3>
         <p class="event__destination-description">${destination.description}</p>
-
-        <div class="event__photos-container">
-          <div class="event__photos-tape">
-            ${createPicturesTemplate(destination.pictures)}
-          </div>
-        </div>
+        ${createPicturesTemplate(destination.pictures)}
       </section>
     </section>
   </form>
