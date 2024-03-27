@@ -2,7 +2,9 @@ import AbstractView from '../framework/view/abstract-view.js';
 
 const createTripInfoTitle = (destinations) => destinations.map((d) => d.name).join(' &mdash; ');
 
-const createTripInfoTemplate = (destinations) => `<section class="trip-main__trip-info  trip-info">
+const getResultPrice = (points) => points.map((point) => point.basePrice).reduce((a, b) => a + b);
+
+const createTripInfoTemplate = (destinations, points) => `<section class="trip-main__trip-info  trip-info">
 <div class="trip-info__main">
   <h1 class="trip-info__title">${createTripInfoTitle(destinations)}</h1>
 
@@ -10,24 +12,22 @@ const createTripInfoTemplate = (destinations) => `<section class="trip-main__tri
 </div>
 
 <p class="trip-info__cost">
-  Total: &euro;&nbsp;<span class="trip-info__cost-value">1230</span>
+  Total: &euro;&nbsp;<span class="trip-info__cost-value">${getResultPrice(points)}</span>
 </p>
 </section>`;
 
 export default class TripInfoView extends AbstractView{
   #points = null;
-  #destinationsModel = null;
+  #destinations = null;
 
-  constructor(destinationsModel, points) {
+  constructor(destinations, points) {
     super();
 
     this.#points = points;
-    this.#destinationsModel = destinationsModel;
+    this.#destinations = destinations;
   }
 
   get template() {
-    const destinations = this.#points.map((point) => (
-      this.#destinationsModel.getById(point.destination)));
-    return createTripInfoTemplate(destinations);
+    return createTripInfoTemplate(this.#destinations, this.#points);
   }
 }
