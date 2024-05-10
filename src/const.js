@@ -24,6 +24,11 @@ export const Duration = {
   DAY: 3
 };
 
+export const Mode = {
+  DEFAULT: 'default',
+  EDIT: 'edit'
+};
+
 export const POINT_EMPTY = {
   basePrice: 0,
   dateFrom: null,
