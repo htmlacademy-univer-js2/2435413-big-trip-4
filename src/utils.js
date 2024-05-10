@@ -45,3 +45,15 @@ export const getDuration = (dateFrom, dateTo) => {
     return dayjs.duration(timeDifference).format('mm[M]');
   }
 };
+
+export const updateItem = (items, update) => {
+  return items.map((item) => item.id === update.id ? update : item);
+}
+
+export const removeHandlerOnEscape = (cb) => document.removeEventListener('keydown', cb);
+
+export const onEscapeKeyDown = (evt) => {
+  if (evt.key === 'Escape') {
+    removeHandlerOnEscape(onEscapeKeyDown);
+  }
+}
