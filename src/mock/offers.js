@@ -1,5 +1,5 @@
 import { TITLE_OFFERS, Price } from '../const.js';
-import { getRandomArrayElement, getRandomIntegerFromRange } from '../utils.js';
+import { getRandomArrayElement, getRandomIntegerFromRange } from '../utils/utils.js';
 
 export const generateMockOffers = () => (
   {

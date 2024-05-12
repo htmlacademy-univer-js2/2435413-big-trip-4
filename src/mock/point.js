@@ -1,4 +1,5 @@
-import { getRandomIntegerFromRange, humanizeTaskDueDate, getDate} from '../utils.js';
+import { getRandomIntegerFromRange } from '../utils/utils.js';
+import { humanizeTaskDueDate, getDate } from '../utils/time-utils.js';
 import { Price } from '../const.js';
 
 export const generateMockPoints = (type, destinationId, offersIds) => (

@@ -3,8 +3,8 @@ import PointView from '../view/point-view.js';
 
 import { Mode } from '../const.js';
 
-import { render, replace } from '../framework/render.js';
-import { onEscapeKeyDown, removeHandlerOnEscape } from '../utils.js';
+import { render, replace, remove } from '../framework/render.js';
+import { onEscapeKeyDown, removeHandlerOnEscape } from '../utils/utils.js';
 
 export default class PointPresenter {
 
@@ -111,5 +111,10 @@ export default class PointPresenter {
     if (this.#mode === Mode.EDIT) {
       this.#onResetButtonClick();
     }
+  };
+
+  destroy = () => {
+    remove(this.#pointComponent);
+    remove(this.#pointEditComponent);
   };
 }

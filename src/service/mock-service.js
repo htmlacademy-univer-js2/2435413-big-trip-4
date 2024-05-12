@@ -1,7 +1,7 @@
 import { generateMockDestinations } from '../mock/destinations.js';
 import { generateMockOffers } from '../mock/offers.js';
 import { generateMockPoints } from '../mock/point.js';
-import { getRandomArrayElement, getRandomIntegerFromRange } from '../utils.js';
+import { getRandomArrayElement, getRandomIntegerFromRange } from '../utils/utils.js';
 import { CountPoints, CountOffers, TYPE_POINT } from '../const.js';
 
 export default class MockService {

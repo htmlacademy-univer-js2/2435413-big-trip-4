@@ -44,6 +44,14 @@ export const DateFormat = {
   SHORT: 'MMM DD'
 };
 
+export const SortType = {
+  DAY: 'Day',
+  EVENT: 'Event',
+  TIME: 'Time',
+  PRICE: 'Price',
+  OFFERS: 'Offers'
+};
+
 export const FILTERS = ['Everything', 'Future', 'Present', 'Past'];
 
 export const Filters = {
@@ -52,8 +60,6 @@ export const Filters = {
   'Present': 'There are no present events now',
   'Past': 'There are no past events now'
 };
-
-export const SORTS = ['Day', 'Event', 'Time', 'Price', 'Offers'];
 
 export const TYPE_POINT = ['Taxi', 'Bus', 'Train', 'Ship', 'Drive', 'Flight', 'Check-in', 'Sightseeing', 'Restaurant'];
 
