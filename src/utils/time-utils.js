@@ -1,14 +1,11 @@
-import { Duration, DateFormat, MILLISECONDS_IN_HOUR, MILLISECONDS_IN_DAY} from './const.js';
+import { Duration, DateFormat, MILLISECONDS_IN_HOUR, MILLISECONDS_IN_DAY } from '../const.js';
+import { getRandomIntegerFromRange } from './utils.js';
 import dayjs from 'dayjs';
 
 const duration = require('dayjs/plugin/duration');
 dayjs.extend(duration);
 
-export const getRandomArrayElement = (items) => items[Math.floor(Math.random() * items.length)];
-
 export const humanizeTaskDueDate = (dueDate) => dueDate ? dayjs(dueDate).format(DateFormat.LONG) : '';
-
-export const getRandomIntegerFromRange = (start, end) => Math.ceil(Math.random() * (end - start + 1)) + start - 1;
 
 export const formatToDateTime = (dueDate) => dueDate ? dayjs(dueDate).format(DateFormat.LONG) : '';
 
@@ -45,15 +42,3 @@ export const getDuration = (dateFrom, dateTo) => {
     return dayjs.duration(timeDifference).format('mm[M]');
   }
 };
-
-export const updateItem = (items, update) => {
-  return items.map((item) => item.id === update.id ? update : item);
-}
-
-export const removeHandlerOnEscape = (cb) => document.removeEventListener('keydown', cb);
-
-export const onEscapeKeyDown = (evt) => {
-  if (evt.key === 'Escape') {
-    removeHandlerOnEscape(onEscapeKeyDown);
-  }
-}

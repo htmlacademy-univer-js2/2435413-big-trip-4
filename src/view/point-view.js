@@ -1,5 +1,5 @@
 import AbstractView from '../framework/view/abstract-view.js';
-import { formatToShortDate, getDuration, formatToShortTime } from '../utils.js';
+import { formatToShortDate, getDuration, formatToShortTime } from '../utils/time-utils.js';
 
 const createFavoriteButtonTemplate = (isFavorite) => `
   <button class="event__favorite-btn ${isFavorite ? 'event__favorite-btn--active' : ''}" type="button">
