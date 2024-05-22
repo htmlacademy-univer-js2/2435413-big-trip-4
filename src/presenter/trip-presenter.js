@@ -37,7 +37,8 @@ export default class TripPresenter {
 
   #renderPoints() {
     this.#points.forEach((point) => {
-      const pointPresenter = new PointPresenter(this.#destinationsModel,
+      const pointPresenter = new PointPresenter(
+        this.#destinationsModel,
         this.#offersModel,
         this.#eventListComponent,
         this.#pointChangeHandler,

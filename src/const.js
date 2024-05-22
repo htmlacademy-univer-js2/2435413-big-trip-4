@@ -52,6 +52,18 @@ export const SortType = {
   OFFERS: 'Offers'
 };
 
+export const TYPE_POINT = {
+  TAXI: 'Taxi',
+  BUS: 'Bus',
+  TRAIN: 'Train',
+  SHIP: 'Ship',
+  DRIVE: 'Drive',
+  FLIGHT: 'Flight',
+  CHECK_IN: 'Check-in',
+  SIGHTSEEING: 'Sightseeing',
+  RESTAURANT: 'Restaurant'
+};
+
 export const FILTERS = ['Everything', 'Future', 'Present', 'Past'];
 
 export const Filters = {
@@ -60,8 +72,6 @@ export const Filters = {
   'Present': 'There are no present events now',
   'Past': 'There are no past events now'
 };
-
-export const TYPE_POINT = ['Taxi', 'Bus', 'Train', 'Ship', 'Drive', 'Flight', 'Check-in', 'Sightseeing', 'Restaurant'];
 
 export const CITIES = ['Abing', 'Bela', 'Santana do Livramento', 'Queimados', 'Yima', 'Cizre', 'Hwado'];
 

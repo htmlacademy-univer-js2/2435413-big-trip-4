@@ -29,7 +29,7 @@ export default class MockService {
 
   generateDestinations = () => generateMockDestinations();
 
-  generateOffers = () => TYPE_POINT.map((type) => {
+  generateOffers = () => Object.values(TYPE_POINT).map((type) => {
     const length = getRandomIntegerFromRange(CountOffers.MIN, CountOffers.MAX);
     return {
       type,
@@ -38,7 +38,7 @@ export default class MockService {
   });
 
   generatePoints = () => Array.from({length: getRandomIntegerFromRange(CountPoints.MIN, CountPoints.MAX)}, () => {
-    const type = getRandomArrayElement(TYPE_POINT);
+    const type = getRandomArrayElement(Object.values(TYPE_POINT));
 
     const destination = getRandomArrayElement(this.destinations);
 

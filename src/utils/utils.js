@@ -4,10 +4,4 @@ export const getRandomIntegerFromRange = (start, end) => Math.ceil(Math.random()
 
 export const updateItem = (items, update) => items.map((item) => item.id === update.id ? update : item);
 
-export const removeHandlerOnEscape = (cb) => document.removeEventListener('keydown', cb);
-
-export const onEscapeKeyDown = (evt) => {
-  if (evt.key === 'Escape') {
-    removeHandlerOnEscape(onEscapeKeyDown);
-  }
-};
+export const isEscapeKey = (key) => key === 'Escape';

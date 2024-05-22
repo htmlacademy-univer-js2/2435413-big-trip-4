@@ -1,13 +1,10 @@
 import PointEditView from '../view/point-edit-view.js';
 import PointView from '../view/point-view.js';
-
 import { Mode } from '../const.js';
-
 import { render, replace, remove } from '../framework/render.js';
-import { onEscapeKeyDown, removeHandlerOnEscape } from '../utils/utils.js';
+import { isEscapeKey } from '../utils/utils.js';
 
 export default class PointPresenter {
-
   #mode = Mode.DEFAULT;
 
   #destinationsModel = null;
@@ -32,11 +29,18 @@ export default class PointPresenter {
     this.#modeChangeHandler = modeChangeHandler;
   }
 
+  #handleKeyDown = (evt) => {
+    if (isEscapeKey(evt.key)) {
+      document.removeEventListener('keydown', this.#handleKeyDown);
+      this.#replaceFormToPoint();
+    }
+  };
+
   #replaceFormToPoint = () => {
     this.#mode = Mode.DEFAULT;
 
     replace(this.#pointComponent, this.#pointEditComponent);
-    removeHandlerOnEscape(this.#onEscapeKeyDown);
+    document.removeEventListener('keydown', this.#handleKeyDown);
   };
 
   #replacePointToForm = () => {
@@ -45,48 +49,43 @@ export default class PointPresenter {
     this.#mode = Mode.EDIT;
 
     replace(this.#pointEditComponent, this.#pointComponent);
-    document.addEventListener('keydown', this.#onEscapeKeyDown);
+    document.addEventListener('keydown', this.#handleKeyDown);
   };
 
-  #onEscapeKeyDown = (evt) => {
-    onEscapeKeyDown(evt);
-
+  #onSubmitForm = (point) => {
     this.#replaceFormToPoint();
+    this.#pointChangeHandler({...point, isFavorite: !point.isFavorite});
   };
 
-  #onSaveButtonSubmit = (evt) => {
-    evt.preventDefault();
-
-    this.#replaceFormToPoint(evt);
-  };
-
-  #onRollupButtonClick = () => {
+  #handleRollupClick = () => {
     this.#replacePointToForm();
   };
 
-  #onResetButtonClick = () => {
+  #handleResetClick = () => {
     this.#replaceFormToPoint();
   };
 
-  #renderPoint = (point, destination, offers, pointChangeHandler) => {
+  #renderPoint = (point, destination, offers) => {
     this.#prevPointComponent = this.#pointComponent;
     this.#prevPointEditComponent = this.#pointEditComponent;
 
-    const onFavoriteButtonCLick = () => pointChangeHandler({...point, isFavorite: !point.isFavorite});
+    const onFavoriteButtonCLick = () => this.#pointChangeHandler({...point, isFavorite: !point.isFavorite});
 
     this.#pointComponent = new PointView(
       point,
       destination,
       offers,
-      this.#onRollupButtonClick,
+      this.#handleRollupClick,
       onFavoriteButtonCLick);
 
     this.#pointEditComponent = new PointEditView(
       point,
       destination,
       offers,
-      this.#onResetButtonClick,
-      this.#onSaveButtonSubmit);
+      this.#handleResetClick,
+      this.#onSubmitForm,
+      this.#destinationsModel,
+      this.#offersModel,);
 
     if (!(this.#prevPointComponent && this.#prevPointEditComponent)) {
       render(this.#pointComponent, this.#eventListComponent.element);
@@ -103,13 +102,12 @@ export default class PointPresenter {
     this.#renderPoint(
       this.#point,
       this.#destinationsModel.getById(this.#point.destination),
-      this.#offersModel.getByType(this.#point.type),
-      this.#pointChangeHandler);
+      this.#offersModel.getByType(this.#point.type));
   }
 
   resetView = () => {
     if (this.#mode === Mode.EDIT) {
-      this.#onResetButtonClick();
+      this.#handleResetClick();
     }
   };
 

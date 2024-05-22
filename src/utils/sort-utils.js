@@ -1,5 +1,4 @@
 import { SortType} from '../const.js';
-
 import dayjs from 'dayjs';
 
 const getTimeDifference = (point) => dayjs(point.dateTo).diff(dayjs(point.dateFrom));
