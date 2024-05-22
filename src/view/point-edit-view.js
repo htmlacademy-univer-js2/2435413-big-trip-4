@@ -1,5 +1,5 @@
 import { POINT_EMPTY, TYPE_POINT, CITIES } from '../const.js';
-import AbstractView from '../framework/view/abstract-view.js';
+import AbstractStatefulView from '../framework/view/abstract-stateful-view.js';
 
 const createPicturesTemplate = (pictures) => {
   let result = '';
@@ -21,12 +21,12 @@ const createEventTypeTemplate = () => {
   let result = '';
   let typeL = '';
 
-  TYPE_POINT.forEach((type, index) => {
+  Object.values(TYPE_POINT).forEach((type, index) => {
     typeL = type.toLowerCase();
 
     result += `<div class="event__type-item">
-    <input id="event-type-${typeL}-${index + 1}" class="event__type-input  visually-hidden" type="radio" name="event-type" value="${typeL}">
-    <label class="event__type-label  event__type-label--${typeL}" for="event-type-${typeL}-${index + 1}">${TYPE_POINT[index]}</label>
+    <input id="event-type-${typeL}-${index + 1}" class="event__type-input  visually-hidden" type="radio" name="event-type" value="${type}">
+    <label class="event__type-label  event__type-label--${typeL}" for="event-type-${typeL}-${index + 1}">${type}</label>
   </div>`;
   });
 
@@ -126,24 +126,125 @@ const createPointEditTemplate = (point, destination, offers) => `<li class="trip
   </form>
   </li>`;
 
-export default class PointEditView extends AbstractView {
+export default class PointEditView extends AbstractStatefulView {
   #point = null;
   #pointDestination = null;
   #pointOffers = null;
 
-  constructor(point = POINT_EMPTY, pointDestination, pointOffers, onResetButtonClick, onFormSubmit) {
+  #onResetClick = null;
+  #onFormSubmit = null;
+
+  #destinationsModel = null;
+  #offersModel = null;
+
+  #currentType = null;
+
+  constructor(point = POINT_EMPTY, pointDestination, pointOffers, onResetButtonClick, onFormSubmit, destinationsModel, offersModel) {
     super();
 
     this.#point = point;
     this.#pointDestination = pointDestination;
     this.#pointOffers = pointOffers;
 
-    this.element.querySelector('.event__reset-btn').addEventListener('click', onResetButtonClick);
-    this.element.querySelector('.event__rollup-btn').addEventListener('click', onResetButtonClick);
-    this.element.querySelector('form').addEventListener('submit', onFormSubmit);
+    this.#onResetClick = onResetButtonClick;
+    this.#onFormSubmit = onFormSubmit;
+
+    this.#destinationsModel = destinationsModel;
+    this.#offersModel = offersModel;
+
+    this._setState({point: point});
+    this._restoreHandlers();
   }
 
+  #typeChangeHandler = (evt) => {
+    this.#currentType = evt.target.value;
+    this.#pointOffers = this.#offersModel.getByType(this.#currentType);
+
+    const offersIds = this.#pointOffers.map((offer) => offer.id);
+
+    this.updateElement({ point: {
+      ...this._state.point,
+      type: this.#currentType,
+      offers: offersIds}
+    });
+  };
+
+  #destinationChangeHandler = (evt) => {
+    evt.preventDefault();
+
+    this.#pointDestination = this.#destinationsModel.get().find((destination) => destination.name === evt.target.value);
+
+    if (this.#pointDestination) {
+      this.updateElement({point:{
+        ...this._state.point,
+        destination: this.#pointDestination.id
+      }});
+    }
+  };
+
+  #offerChangeHandler = () => {
+    const checkedBoxes = Array.from(this.element.querySelectorAll('.event__offer-checkbox'));
+
+    this._setState({
+      point: {
+        ...this._state.point,
+        offers: checkedBoxes.map((element) => element.dataset.offerId)
+      }
+    });
+  };
+
+  #priceChangeHandler = (evt) => {
+    this._setState({
+      point: {
+        ...this._state.point,
+        basePrice: evt.target.valueAsNumber
+      }
+    });
+  };
+
+  #handleResetClick = () => {
+    this.updateElement({ point: this.#point });
+    this.#onResetClick();
+  };
+
+  #handleSaveClick = (evt) => {
+    evt.preventDefault();
+    this.#point = this._state.point;
+    this.#onFormSubmit({...this.#point});
+  };
+
+  _restoreHandlers = () => {
+    this.element
+      .querySelector('.event__reset-btn')
+      .addEventListener('click', this.#handleResetClick);
+
+    this.element
+      .querySelector('.event__rollup-btn')
+      .addEventListener('click', this.#handleResetClick);
+
+    this.element
+      .querySelector('form')
+      .addEventListener('submit', this.#handleSaveClick);
+
+    this.element
+      .querySelectorAll('.event__type-input')
+      .forEach((eventType) => eventType
+        .addEventListener('change', this.#typeChangeHandler));
+
+    this.element
+      .querySelector('.event__input')
+      .addEventListener('change', this.#destinationChangeHandler);
+
+    this.element
+      .querySelector('.event__input--price')
+      .addEventListener('change', this.#priceChangeHandler);
+
+    this.element
+      .querySelector('.event__available-offers')
+      .addEventListener('change', this.#offerChangeHandler);
+  };
+
   get template() {
-    return createPointEditTemplate(this.#point, this.#pointDestination, this.#pointOffers);
+    return createPointEditTemplate(this._state.point, this.#pointDestination, this.#pointOffers);
   }
 }

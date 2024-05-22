@@ -1,5 +1,4 @@
 import TripPresenter from './presenter/trip-presenter.js';
-
 import MockService from './service/mock-service.js';
 import DestinationsModel from './model/destinations-model.js';
 import OffersModel from './model/offers-model.js';
