@@ -1,7 +1,4 @@
-import { SortType } from '../const.js';
-
 import SortView from '../view/sort-view.js';
-
 import { render } from '../framework/render.js';
 
 export default class SortPresenter {
@@ -14,7 +11,7 @@ export default class SortPresenter {
   }
 
   #renderSort() {
-    render(new SortView(SortType, this.#onSortComponentClick), this.#container);
+    render(new SortView(this.#onSortComponentClick), this.#container);
   }
 
   init() {
