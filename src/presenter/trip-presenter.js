@@ -2,16 +2,14 @@ import EventListView from '../view/event-list-view.js';
 import FilterView from '../view/filter-view.js';
 import TripInfoView from '../view/trip-info-view.js';
 import EmptyListView from '../view/empty-list-view.js';
-
 import PointPresenter from './point-presenter.js';
 import SortPresenter from './sort-presenter.js';
-
 import { render, RenderPosition } from '../framework/render.js';
 import { getRandomArrayElement, updateItem } from '../utils/utils.js';
 import { sort } from '../utils/sort-utils.js';
 import { FILTERS, SortType } from '../const.js';
 
-const bodyElement = document.querySelector('body');
+const bodyElement = document.body;
 const headerElement = bodyElement.querySelector('.page-header');
 const tripInfoElement = headerElement.querySelector('.trip-main');
 const filterElement = tripInfoElement.querySelector('.trip-controls__filters');

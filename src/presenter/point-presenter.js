@@ -52,16 +52,16 @@ export default class PointPresenter {
     document.addEventListener('keydown', this.#handleKeyDown);
   };
 
-  #onSubmitForm = (point) => {
+  #formSubmitHandler = (point) => {
     this.#replaceFormToPoint();
     this.#pointChangeHandler({...point, isFavorite: !point.isFavorite});
   };
 
-  #handleRollupClick = () => {
+  #onRollupClick = () => {
     this.#replacePointToForm();
   };
 
-  #handleResetClick = () => {
+  #resetClickHandler = () => {
     this.#replaceFormToPoint();
   };
 
@@ -69,21 +69,19 @@ export default class PointPresenter {
     this.#prevPointComponent = this.#pointComponent;
     this.#prevPointEditComponent = this.#pointEditComponent;
 
-    const onFavoriteButtonCLick = () => this.#pointChangeHandler({...point, isFavorite: !point.isFavorite});
+    const onFavoriteCLick = () => this.#pointChangeHandler({...point, isFavorite: !point.isFavorite});
 
     this.#pointComponent = new PointView(
       point,
       destination,
       offers,
-      this.#handleRollupClick,
-      onFavoriteButtonCLick);
+      this.#onRollupClick,
+      onFavoriteCLick);
 
     this.#pointEditComponent = new PointEditView(
       point,
-      destination,
-      offers,
-      this.#handleResetClick,
-      this.#onSubmitForm,
+      this.#resetClickHandler,
+      this.#formSubmitHandler,
       this.#destinationsModel,
       this.#offersModel,);
 
@@ -107,7 +105,7 @@ export default class PointPresenter {
 
   resetView = () => {
     if (this.#mode === Mode.EDIT) {
-      this.#handleResetClick();
+      this.#resetClickHandler();
     }
   };
 

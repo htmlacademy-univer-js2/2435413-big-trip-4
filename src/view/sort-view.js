@@ -1,16 +1,19 @@
 import AbstractView from '../framework/view/abstract-view.js';
 import { SortType } from '../const.js';
+import { isSortTypeAllowed } from '../utils/sort-utils.js';
 
 const createSortTemplate = () => {
   let result = '';
-  let sortL = '';
+  let lowerCaseSortName = '';
 
   Object.values(SortType).forEach((sort) => {
-    sortL = sort.toLowerCase();
+    lowerCaseSortName = sort.toLowerCase();
 
-    result += `<div class="trip-sort__item  trip-sort__item--${sortL}">
-      <input id="sort-${sortL}" class="trip-sort__input  visually-hidden" type="radio" name="trip-sort" value="sort-${sortL}" ${sort === SortType.DAY ? 'checked' : ''}>
-      <label class="trip-sort__btn" for="sort-${sortL}">${sort}</label>
+    result += `<div class="trip-sort__item  trip-sort__item--${lowerCaseSortName}">
+      <input id="sort-${lowerCaseSortName}" class="trip-sort__input  visually-hidden" type="radio" name="trip-sort" value="sort-${lowerCaseSortName}"
+      ${sort === SortType.DAY ? 'checked' : ''}
+      ${isSortTypeAllowed(sort) ? '' : 'disabled'}>
+      <label class="trip-sort__btn" for="sort-${lowerCaseSortName}">${sort}</label>
     </div>`;
   });
 
@@ -23,17 +26,19 @@ export default class SortView extends AbstractView {
   #numberSort = null;
   #onSortComponentClick = null;
 
-  constructor(numberSort, onComponentSortClick) {
+  constructor(onSortClick) {
     super();
 
-    this.#numberSort = numberSort;
-    this.#onSortComponentClick = onComponentSortClick;
+    this.#onSortComponentClick = onSortClick;
 
-    this.element.querySelectorAll('.trip-sort__btn').forEach((sortButtonElement) =>
-      sortButtonElement.addEventListener('click', this.#onSortComponentClick));
+    this.element.querySelectorAll('.trip-sort__btn').forEach((sortButtonElement) => {
+      if (isSortTypeAllowed(sortButtonElement.textContent)) {
+        sortButtonElement.addEventListener('click', this.#onSortComponentClick);
+      }
+    });
   }
 
   get template() {
-    return createSortTemplate(this.#numberSort);
+    return createSortTemplate();
   }
 }

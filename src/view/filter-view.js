@@ -3,16 +3,14 @@ import { FILTERS } from '../const.js';
 
 const createFilterTemplate = (activeFilter) => {
   let result = '';
-  let filterL = '';
-  let check = '';
 
   FILTERS.forEach((filter) => {
-    check = activeFilter === filter ? 'checked' : 'disabled';
-    filterL = filter.toLowerCase();
+    const check = activeFilter === filter ? 'checked' : 'disabled';
+    const lowerCasefilterName = filter.toLowerCase();
 
     result += `<div class="trip-filters__filter">
-    <input id="filter-${filterL}" class="trip-filters__filter-input  visually-hidden" type="radio" name="trip-filter" value="${filterL}" ${check}>
-    <label class="trip-filters__filter-label" for="filter-${filterL}">${filter}</label>
+    <input id="filter-${lowerCasefilterName}" class="trip-filters__filter-input  visually-hidden" type="radio" name="trip-filter" value="${lowerCasefilterName}" ${check}>
+    <label class="trip-filters__filter-label" for="filter-${lowerCasefilterName}">${filter}</label>
   </div>`;
   });
 
@@ -23,7 +21,7 @@ const createFilterTemplate = (activeFilter) => {
 };
 
 export default class FilterView extends AbstractView{
-  #filter = false;
+  #filter = null;
 
   constructor(filter) {
     super();
