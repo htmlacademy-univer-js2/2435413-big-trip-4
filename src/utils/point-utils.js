@@ -19,10 +19,10 @@ export const isPointEmpty = (point) => {
 export const adaptToClient = (point) => {
   const adaptedPoint = {
     ...point,
-    basePrice: ['base_price'],
-    dateFrom: ['date_from'],
-    dateTo: ['date_to'],
-    isFavorite: ['is_favorite']
+    basePrice: point['base_price'],
+    dateFrom: point['date_from'],
+    dateTo: point['date_to'],
+    isFavorite: point['is_favorite']
   };
 
   delete adaptedPoint['base_price'];
