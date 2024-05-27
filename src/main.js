@@ -13,7 +13,7 @@ const bodyElement = document.querySelector('body');
 const mainElement = bodyElement.querySelector('.page-main');
 const eventListElement = mainElement.querySelector('.trip-events');
 
-const pointApiService = new PointsApiService(END_POINT, AUTHORIZATION)
+const pointApiService = new PointsApiService(END_POINT, AUTHORIZATION);
 const destinationsModel = new DestinationsModel(pointApiService);
 const offersModel = new OffersModel(pointApiService);
 const filterModel = new FilterModel();
