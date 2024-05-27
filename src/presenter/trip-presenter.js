@@ -63,8 +63,10 @@ export default class TripPresenter {
   #renderTripInfo() {
     this.#tripInfoComponent = new TripInfoView(
       this.points.map((point) => (
-        this.#destinationsModel.getById(point.destination))),
-      this.points);
+        this.#destinationsModel.getById(point.destination)
+      )),
+      this.points,
+      [...this.#offersModel.get()]);
 
     render(this.#tripInfoComponent, tripInfoElement, RenderPosition.AFTERBEGIN);
   }
