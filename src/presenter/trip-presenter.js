@@ -1,4 +1,5 @@
 import EventListView from '../view/event-list-view.js';
+import LoadingView from '../view/loading-view.js';
 import TripInfoView from '../view/trip-info-view.js';
 import EmptyListView from '../view/empty-list-view.js';
 import NewPointButtonView from '../view/new-point-button-view.js';
@@ -18,6 +19,7 @@ const filterContainer = tripInfoElement.querySelector('.trip-controls__filters')
 
 export default class TripPresenter {
   #eventListComponent = new EventListView();
+  #loadingComponent = new LoadingView();
   #uiBlocker = new UiBlocker({
     lowerLimit: TimeLimit.LOWER_LIMIT,
     upperLimit: TimeLimit.UPPER_LIMIT
@@ -37,6 +39,7 @@ export default class TripPresenter {
   #sortModel = null;
 
   #currentSortType = SortType.DAY;
+  #isLoading = true;
   #pointPresenters = new Map();
 
   constructor(container, destinationsModel, offersModel, pointsModel, filterModel, sortModel) {
@@ -93,6 +96,10 @@ export default class TripPresenter {
     render(this.#messageComponent, this.#eventListComponent.element);
   };
 
+  #renderLoading() {
+    render(this.#loadingComponent, this.#container, RenderPosition.AFTERBEGIN);
+  }
+
   #renderPoints() {
     this.points.forEach((point) => {
       const pointPresenter = new PointPresenter(
@@ -133,12 +140,17 @@ export default class TripPresenter {
     this.#renderFilters();
     this.#renderNewPointButton();
 
-    if (this.points.length) {
+    if (this.points.length && !this.#isLoading) {
       this.#renderTripInfo();
       this.#renderSort();
       this.#renderEventList();
       this.#renderPoints();
 
+      return;
+    }
+
+    if (this.#isLoading) {
+      this.#renderLoading();
       return;
     }
 
@@ -228,6 +240,8 @@ export default class TripPresenter {
         this.#renderBoard();
         break;
       case UpdateType.INIT:
+        this.#isLoading = false;
+        remove(this.#loadingComponent);
         this.#renderBoard();
         break;
     }
