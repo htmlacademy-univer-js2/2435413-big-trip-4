@@ -34,12 +34,36 @@ export default class PointPresenter extends Observable{
   }
 
   setSaving() {
+    if (this._mode === Mode.EDITING) {
+      this.#pointEditComponent.updateElement({
+        isDisabled: true,
+        isSaving: true
+      });
+    }
   }
 
   setDeleting() {
+    if (this._mode === Mode.EDITING) {
+      this.#pointEditComponent.updateElement({
+        isDisabled: true,
+        isDeleting: true
+      });
+    }
   }
 
   setAborting() {
+    if (this._mode === Mode.DEFAULT) {
+      this.#pointComponent.shake();
+      return;
+    }
+    const resetFormState = () => {
+      this.#pointEditComponent.updateElement({
+        isDisabled: false,
+        isSaving: false,
+        isDeleting: false
+      });
+    };
+    this.#pointEditComponent.shake(resetFormState);
   }
 
   #handleKeyDown = (evt) => {
