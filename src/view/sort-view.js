@@ -23,20 +23,28 @@ const createSortTemplate = () => {
 };
 
 export default class SortView extends AbstractView {
-  #numberSort = null;
   #onSortComponentClick = null;
+  #currentSort = null;
 
-  constructor(onSortClick) {
+  constructor(currentSort, onSortClick) {
     super();
 
     this.#onSortComponentClick = onSortClick;
+    this.#currentSort = currentSort;
 
     this.element.querySelectorAll('.trip-sort__btn').forEach((sortButtonElement) => {
       if (isSortTypeAllowed(sortButtonElement.textContent)) {
-        sortButtonElement.addEventListener('click', this.#onSortComponentClick);
+        sortButtonElement.addEventListener('click', this.#onSortTypeChange);
       }
     });
   }
+
+  #onSortTypeChange = (evt) => {
+    if (this.#currentSort === evt.target.textContent) {
+      return;
+    }
+    this.#onSortComponentClick(evt.target.textContent);
+  };
 
   get template() {
     return createSortTemplate();
