@@ -26,7 +26,9 @@ export const Duration = {
 
 export const Mode = {
   DEFAULT: 'default',
-  EDIT: 'edit'
+  EDIT: 'edit',
+  EMPTY_POINT: 'emptyPoint',
+  EMPTY_LIST: 'emptyList'
 };
 
 export const POINT_EMPTY = {
@@ -36,7 +38,7 @@ export const POINT_EMPTY = {
   destination: null,
   isFavorite: false,
   offers: [],
-  type: 'flight'
+  type: 'Flight'
 };
 
 export const DateFormat = {
@@ -52,7 +54,7 @@ export const SortType = {
   OFFERS: 'Offers'
 };
 
-export const TYPE_POINT = {
+export const PointType = {
   TAXI: 'Taxi',
   BUS: 'Bus',
   TRAIN: 'Train',
@@ -64,7 +66,24 @@ export const TYPE_POINT = {
   RESTAURANT: 'Restaurant'
 };
 
-export const FILTERS = ['Everything', 'Future', 'Present', 'Past'];
+export const FilterType = {
+  EVERYTHING: 'Everything',
+  FUTURE: 'Future',
+  PRESENT: 'Present',
+  PAST: 'Past'
+};
+
+export const UpdateType = {
+  PATCH: 'Patch',
+  MINOR: 'Minor',
+  MAJOR: 'Major'
+};
+
+export const UserAction = {
+  UPDATE_POINT: 'update',
+  DELETE_POINT: 'delete',
+  CREATE_POINT: 'create'
+};
 
 export const Filters = {
   'Everything': 'Click New Event to create your first point',

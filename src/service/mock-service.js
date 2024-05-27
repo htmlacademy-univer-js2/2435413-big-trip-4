@@ -2,7 +2,7 @@ import { generateMockDestinations } from '../mock/destinations.js';
 import { generateMockOffers } from '../mock/offers.js';
 import { generateMockPoints } from '../mock/point.js';
 import { getRandomArrayElement, getRandomIntegerFromRange } from '../utils/utils.js';
-import { CountPoints, CountOffers, TYPE_POINT } from '../const.js';
+import { CountPoints, CountOffers, PointType } from '../const.js';
 
 export default class MockService {
   #destinations = [];
@@ -29,7 +29,7 @@ export default class MockService {
 
   generateDestinations = () => generateMockDestinations();
 
-  generateOffers = () => Object.values(TYPE_POINT).map((type) => {
+  generateOffers = () => Object.values(PointType).map((type) => {
     const length = getRandomIntegerFromRange(CountOffers.MIN, CountOffers.MAX);
     return {
       type,
@@ -38,7 +38,7 @@ export default class MockService {
   });
 
   generatePoints = () => Array.from({length: getRandomIntegerFromRange(CountPoints.MIN, CountPoints.MAX)}, () => {
-    const type = getRandomArrayElement(Object.values(TYPE_POINT));
+    const type = getRandomArrayElement(Object.values(PointType));
 
     const destination = getRandomArrayElement(this.destinations);
 
@@ -54,4 +54,14 @@ export default class MockService {
 
     return generateMockPoints(type, destination.id, offerIds);
   });
+
+  updatePoint(updatedPoint) {
+    return updatedPoint;
+  }
+
+  addPoint(point) {
+    return {...point};
+  }
+
+  deletePoint() {}
 }
