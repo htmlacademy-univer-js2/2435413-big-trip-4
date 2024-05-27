@@ -2,7 +2,8 @@ import PointEditView from '../view/point-edit-view.js';
 import PointView from '../view/point-view.js';
 import { Mode, UpdateType, UserAction } from '../const.js';
 import { render, replace, remove, RenderPosition } from '../framework/render.js';
-import { isBigDifference, isEscapeKey, isPointEmpty } from '../utils/utils.js';
+import { isEscapeKey } from '../utils/utils.js';
+import { isBigDifference, isPointEmpty } from '../utils/point-utils.js';
 import Observable from '../framework/observable.js';
 
 export default class PointPresenter extends Observable{
@@ -30,6 +31,15 @@ export default class PointPresenter extends Observable{
 
     this.#dataChangeHandler = dataChangeHandler;
     this.#modeChangeHandler = modeChangeHandler;
+  }
+
+  setSaving() {
+  }
+
+  setDeleting() {
+  }
+
+  setAborting() {
   }
 
   #handleKeyDown = (evt) => {

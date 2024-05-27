@@ -54,6 +54,11 @@ export const SortType = {
   OFFERS: 'Offers'
 };
 
+export const TimeLimit = {
+  LOWER_LIMIT: 350,
+  UPPER_LIMIT: 1000,
+};
+
 export const PointType = {
   TAXI: 'Taxi',
   BUS: 'Bus',
@@ -76,13 +81,21 @@ export const FilterType = {
 export const UpdateType = {
   PATCH: 'Patch',
   MINOR: 'Minor',
-  MAJOR: 'Major'
+  MAJOR: 'Major',
+  INIT: 'Init'
 };
 
 export const UserAction = {
   UPDATE_POINT: 'update',
   DELETE_POINT: 'delete',
   CREATE_POINT: 'create'
+};
+
+export const Method = {
+  GET: 'GET',
+  PUT: 'PUT',
+  POST: 'POST',
+  DELETE: 'DELETE'
 };
 
 export const Filters = {
