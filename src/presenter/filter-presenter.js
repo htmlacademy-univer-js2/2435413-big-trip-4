@@ -1,16 +1,23 @@
 import { render, replace, remove } from '../framework/render.js';
 import FilterView from '../view/filter-view.js';
+import { UpdateType } from '../const.js';
 
 export default class FilterPresenter {
   #filterContainer = null;
   #filterModel = null;
   #filterComponent = null;
-  #filterChangeHandler = null;
 
-  constructor(filterChangeContainer, filterModel, filterHandler) {
-    this.#filterContainer = filterChangeContainer;
+  constructor(filterContainer, filterModel) {
+    this.#filterContainer = filterContainer;
     this.#filterModel = filterModel;
-    this.#filterChangeHandler = filterHandler;
+  }
+
+  init() {
+    this.#renderFilters();
+  }
+
+  remove() {
+    remove(this.#filterComponent);
   }
 
   #renderFilters = () => {
@@ -29,11 +36,5 @@ export default class FilterPresenter {
     replace(this.#filterComponent, previousFilterComponent);
   };
 
-  init() {
-    this.#renderFilters();
-  }
-
-  remove() {
-    remove(this.#filterComponent);
-  }
+  #filterChangeHandler = (filterType) => this.#filterModel.set(UpdateType.MAJOR, filterType);
 }

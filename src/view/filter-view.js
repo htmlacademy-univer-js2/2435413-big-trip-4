@@ -19,12 +19,11 @@ const createFiltersElements = (currentFilterType) => {
   return result;
 };
 
-const createFiltersTemplate = (currentFilterType) => (
-  `<form class="trip-filters" action="#" method="get">
-      ${createFiltersElements(currentFilterType)}
-      <button class="visually-hidden" type="submit">Accept filter</button>
-     </form>`
-);
+const createFiltersTemplate = (currentFilterType) => `
+<form class="trip-filters" action="#" method="get">
+  ${createFiltersElements(currentFilterType)}
+  <button class="visually-hidden" type="submit">Accept filter</button>
+</form>`;
 
 export default class FiltersView extends AbstractView{
   #currentFilter = null;
@@ -32,6 +31,7 @@ export default class FiltersView extends AbstractView{
 
   constructor(currentFilterType, filterTypeHandler) {
     super();
+
     this.#currentFilter = currentFilterType;
     this.#filterTypeHandler = filterTypeHandler;
     this.element.addEventListener('change', this.#onFilterTypeChange);
