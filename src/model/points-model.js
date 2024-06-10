@@ -4,9 +4,9 @@ import { updateItem, adaptToServer, adaptToClient } from '../utils/point-utils.j
 
 export default class PointsModel extends Observable {
   #service = null;
-  #points = [];
   #destinationsModel = null;
   #offersModel = null;
+  #points = [];
 
   constructor(service, destinationsModel, offersModel) {
     super();
@@ -15,6 +15,8 @@ export default class PointsModel extends Observable {
     this.#destinationsModel = destinationsModel;
     this.#offersModel = offersModel;
   }
+
+  get = () => this.#points;
 
   async init() {
     try {
@@ -31,12 +33,10 @@ export default class PointsModel extends Observable {
     }
   }
 
-  get = () => this.#points;
-
   async update(updateType, point) {
     try {
-      const updatedPoint = await this.#service.updatePoint(adaptToServer(point));
-      const adaptedPoint = adaptToServer(updatedPoint);
+      const updatedPoint = await this.#service.updatePoint(adaptToServer(point, false));
+      const adaptedPoint = adaptToClient(updatedPoint);
       this.#points = updateItem(this.#points, adaptedPoint);
       this._notify(updateType, adaptedPoint);
     } catch {
@@ -46,8 +46,8 @@ export default class PointsModel extends Observable {
 
   async add(updateType, point) {
     try {
-      const addedPoint = await this.#service.addedPoint(adaptToServer(point));
-      const adaptedPoint = adaptToServer(addedPoint);
+      const addedPoint = await this.#service.addPoint(adaptToServer(point, true));
+      const adaptedPoint = adaptToClient(addedPoint);
       this.#points.push(adaptedPoint);
       this._notify(updateType, adaptedPoint);
     } catch {

@@ -1,24 +1,19 @@
 import SortView from '../view/sort-view.js';
 import { render, remove } from '../framework/render.js';
+import { UpdateType } from '../const.js';
 
 export default class SortPresenter {
-  #onSortComponentClick = null;
   #container = null;
   #sortComponent = null;
   #currentSort = null;
+  #sortModel = null;
+  #sortChangeHandler = null;
 
-  constructor(currentSort, onSortComponentClick, container) {
-    this.#currentSort = currentSort;
-    this.#onSortComponentClick = onSortComponentClick;
+  constructor(sortChangeHandler, container, sortModel) {
+    this.#currentSort = sortModel.get();
+    this.#sortChangeHandler = sortChangeHandler;
     this.#container = container;
-  }
-
-  #renderSort() {
-    this.#sortComponent = new SortView(
-      this.#currentSort,
-      this.#onSortComponentClick);
-
-    render(this.#sortComponent, this.#container);
+    this.#sortModel = sortModel;
   }
 
   init() {
@@ -28,4 +23,18 @@ export default class SortPresenter {
   remove() {
     remove(this.#sortComponent);
   }
+
+  #renderSort() {
+    this.#sortComponent = new SortView(
+      this.#currentSort,
+      this.#onSortComponentClick
+    );
+
+    render(this.#sortComponent, this.#container);
+  }
+
+  #onSortComponentClick = (sortType) => {
+    this.#sortChangeHandler(sortType);
+    this.#sortModel.set(UpdateType.MINOR, sortType);
+  };
 }

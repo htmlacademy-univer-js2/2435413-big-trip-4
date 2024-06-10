@@ -6,12 +6,12 @@ export default class DestinationsModel {
     this.#service = service;
   }
 
+  get = () => this.#destinations;
+
+  getById = (id) => this.#destinations.find((destination) => destination.id === id);
+
   async init() {
     this.#destinations = await this.#service.destinations;
     return this.#destinations;
   }
-
-  get = () => this.#destinations;
-
-  getById = (id) => this.#destinations.find((destination) => destination.id === id);
 }

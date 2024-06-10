@@ -1,23 +1,3 @@
-export const CountPoints = {
-  MIN: 0,
-  MAX: 4
-};
-
-export const CountPictures = {
-  MIN: 0,
-  MAX: 5
-};
-
-export const CountOffers = {
-  MIN: 1,
-  MAX: 5
-};
-
-export const Price = {
-  MIN: 0,
-  MAX: 1000
-};
-
 export const Duration = {
   MIN: 60,
   HOUR: 10,
@@ -27,7 +7,6 @@ export const Duration = {
 export const Mode = {
   DEFAULT: 'default',
   EDIT: 'edit',
-  EMPTY_POINT: 'emptyPoint',
   EMPTY_LIST: 'emptyList'
 };
 
@@ -35,10 +14,10 @@ export const POINT_EMPTY = {
   basePrice: 0,
   dateFrom: null,
   dateTo: null,
-  destination: null,
   isFavorite: false,
+  destination: null,
   offers: [],
-  type: 'Flight'
+  type: 'flight'
 };
 
 export const DateFormat = {
@@ -85,6 +64,14 @@ export const UpdateType = {
   INIT: 'Init'
 };
 
+export const ButtonLabel = {
+  CANCEL: 'Cancel',
+  DELETE: 'Delete',
+  SAVE: 'Save',
+  DELETE_IN_PROGRESS: 'Deleting...',
+  SAVE_IN_PROGRESS: 'Saving...'
+};
+
 export const UserAction = {
   UPDATE_POINT: 'update',
   DELETE_POINT: 'delete',
@@ -104,17 +91,6 @@ export const Filters = {
   'Present': 'There are no present events now',
   'Past': 'There are no past events now'
 };
-
-export const CITIES = ['Abing', 'Bela', 'Santana do Livramento', 'Queimados', 'Yima', 'Cizre', 'Hwado'];
-
-export const DESCRIPTIONS = [
-  'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-  'Cras aliquet varius magna, non porta ligula feugiat eget.',
-  'Fusce tristique felis at fermentum pharetra.',
-  'Aliquam id orci ut lectus varius viverra.',
-  'Nullam nunc ex, convallis sed finibus eget, sollicitudin eget ante.'];
-
-export const TITLE_OFFERS = ['Upgrade to a business class', 'Add luggage', 'Add meal', 'Choose seats', 'Travel by train'];
 
 export const MILLISECONDS_IN_DAY = 86400000;
 
