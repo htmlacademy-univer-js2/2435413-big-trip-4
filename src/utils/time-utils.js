@@ -1,8 +1,8 @@
 import { Duration, DateFormat, MILLISECONDS_IN_HOUR, MILLISECONDS_IN_DAY } from '../const.js';
 import { getRandomIntegerFromRange } from './utils.js';
 import dayjs from 'dayjs';
+import duration from 'dayjs/plugin/duration';
 
-const duration = require('dayjs/plugin/duration');
 dayjs.extend(duration);
 
 export const humanizeTaskDueDate = (dueDate) => dueDate ? dayjs(dueDate).format(DateFormat.LONG) : '';
