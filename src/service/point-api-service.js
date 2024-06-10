@@ -35,7 +35,7 @@ export default class PoinApiService extends ApiService{
       url: 'points',
       method: Method.POST,
       body: JSON.stringify(point),
-      headers: new Headers({'Content-Type': 'application/json'})
+      headers: new Headers({'Content-Type': 'application/json'}),
     });
 
     const parsedResponse = await ApiService.parseResponse(response);
@@ -46,7 +46,7 @@ export default class PoinApiService extends ApiService{
   async deletePoint(point) {
     await this._load({
       url: `points/${point.id}`,
-      method: Method.POST
+      method: Method.DELETE
     });
   }
 }

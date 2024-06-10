@@ -4,11 +4,11 @@ import { getDuration } from './time-utils.js';
 export const updateItem = (items, update) => items.map((item) => item.id === update.id ? update : item);
 
 export const isPointEmpty = (point) => {
-  const p = Object.values(point);
-  const p2 = Object.values({...POINT_EMPTY});
+  const currentPoint = Object.values(point);
+  const emptyPoint = Object.values({...POINT_EMPTY});
 
-  for (let i = 0; i < p.length - 1; i++) {
-    if (p[i] !== p2[i]) {
+  for (let i = 0; i < point.length - 1; i++) {
+    if (currentPoint[i] !== emptyPoint[i] && emptyPoint[i] !== '') {
       return false;
     }
   }
@@ -33,7 +33,7 @@ export const adaptToClient = (point) => {
   return adaptedPoint;
 };
 
-export const adaptToServer = (point) => {
+export const adaptToServer = (point, isNewPoint) => {
   const adaptedPoint = {
     ...point,
     ['base_price']: point.basePrice,
@@ -41,6 +41,10 @@ export const adaptToServer = (point) => {
     ['date_to']: new Date(point.dateTo).toISOString(),
     ['is_favorite']: point.isFavorite
   };
+
+  if (isNewPoint) {
+    delete adaptedPoint['id'];
+  }
 
   delete adaptedPoint.basePrice;
   delete adaptedPoint.dateFrom;
@@ -54,3 +58,6 @@ export const isBigDifference = (pointA, pointB) =>
   pointA.dateFrom !== pointB.dateFrom
   || pointA.basePrice !== pointB.basePrice
   || getDuration(pointA.dateFrom, pointA.dateTo) !== getDuration(pointB.dateFrom, pointB.dateTo);
+
+export const isEmptyEventDetails = (offers, dest) => offers.length || dest.description || dest.pictures.length;
+

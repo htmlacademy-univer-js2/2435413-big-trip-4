@@ -12,7 +12,7 @@ const createTripInfoTitle = (destinations) => {
 };
 
 const getResultPrice = (points, offers) => {
-  let sum = 0;
+  let resultPrice = 0;
   let checkedOffers = [];
   let offersByType = null;
 
@@ -22,26 +22,28 @@ const getResultPrice = (points, offers) => {
 
     if (checkedOffers.length){
       checkedOffers.forEach((checked) => {
-        sum += offersByType.offers.find((offer) => offer.id === checked).price;
+        resultPrice += offersByType.offers.find((offer) => offer.id === checked).price;
       });
     }
 
-    sum += point.basePrice;
+    resultPrice += point.basePrice;
   });
 
-  return sum;
+  return resultPrice;
 };
 
-const createTripInfoTemplate = (destinations, points, offers) => `<section class="trip-main__trip-info  trip-info">
-<div class="trip-info__main">
-  <h1 class="trip-info__title">${createTripInfoTitle(destinations)}</h1>
+const createTripInfoTemplate = (destinations, points, offers) => `
+<section class="trip-main__trip-info  trip-info">
+  <div class="trip-info__main">
+    <h1 class="trip-info__title">${createTripInfoTitle(destinations)}</h1>
 
-  <p class="trip-info__dates">${formatToShortDate(points[points.length - 1].dateTo)}&nbsp;&mdash;&nbsp;${formatToShortDate(points[0].dateTo)}</p>
-</div>
-<p class="trip-info__cost">
-  Total: &euro;&nbsp;<span class="trip-info__cost-value">${getResultPrice(points, offers)}</span>
-</p>
-</section>`;
+    <p class="trip-info__dates">${formatToShortDate(points[points.length - 1].dateTo)}&nbsp;&mdash;&nbsp;${formatToShortDate(points[0].dateTo)}</p>
+  </div>
+  <p class="trip-info__cost">
+    Total: &euro;&nbsp;<span class="trip-info__cost-value">${getResultPrice(points, offers)}</span>
+  </p>
+</section>
+`;
 
 export default class TripInfoView extends AbstractView{
   #points = null;
