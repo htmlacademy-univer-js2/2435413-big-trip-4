@@ -9,10 +9,15 @@ const sortByTime = (pointA, pointB) => getTimeDifference(pointB) - getTimeDiffer
 
 const sortByPrice = (pointA, pointB) => pointB.basePrice - pointA.basePrice;
 
-export const sort = {
+const sort = {
   [SortType.DAY]: (array) => array.sort(sortByDay),
   [SortType.TIME]: (array) => array.sort(sortByTime),
   [SortType.PRICE]: (array) => array.sort(sortByPrice)
 };
 
-export const isSortTypeAllowed = (type) => !(type === SortType.EVENT || type === SortType.OFFERS);
+const isSortTypeAllowed = (type) => !(type === SortType.EVENT || type === SortType.OFFERS);
+
+export {
+  sort,
+  isSortTypeAllowed
+};

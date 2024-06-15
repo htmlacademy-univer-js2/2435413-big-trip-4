@@ -1,9 +1,9 @@
 import { POINT_EMPTY } from '../const.js';
 import { getDuration } from './time-utils.js';
 
-export const updateItem = (items, update) => items.map((item) => item.id === update.id ? update : item);
+const updateItem = (items, update) => items.map((item) => item.id === update.id ? update : item);
 
-export const isPointEmpty = (point) => {
+const isPointEmpty = (point) => {
   const currentPoint = Object.values(point);
   const emptyPoint = Object.values({...POINT_EMPTY});
 
@@ -16,7 +16,7 @@ export const isPointEmpty = (point) => {
   return true;
 };
 
-export const adaptToClient = (point) => {
+const adaptToClient = (point) => {
   const adaptedPoint = {
     ...point,
     basePrice: point['base_price'],
@@ -33,7 +33,7 @@ export const adaptToClient = (point) => {
   return adaptedPoint;
 };
 
-export const adaptToServer = (point, isNewPoint) => {
+const adaptToServer = (point, isNewPoint) => {
   const adaptedPoint = {
     ...point,
     ['base_price']: point.basePrice,
@@ -54,10 +54,18 @@ export const adaptToServer = (point, isNewPoint) => {
   return adaptedPoint;
 };
 
-export const isBigDifference = (pointA, pointB) =>
+const isBigDifference = (pointA, pointB) =>
   pointA.dateFrom !== pointB.dateFrom
   || pointA.basePrice !== pointB.basePrice
   || getDuration(pointA.dateFrom, pointA.dateTo) !== getDuration(pointB.dateFrom, pointB.dateTo);
 
-export const isEmptyEventDetails = (offers, dest) => offers.length || dest.description || dest.pictures.length;
+const isEmptyEventDetails = (offers, dest) => offers.length || dest.description || dest.pictures.length;
 
+export {
+  updateItem,
+  isPointEmpty,
+  adaptToClient,
+  adaptToServer,
+  isBigDifference,
+  isEmptyEventDetails
+};

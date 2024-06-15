@@ -130,9 +130,9 @@ export default class TripPresenter {
       this.#newPointButtonComponent
     );
 
+    this.#filterModel.set(UpdateType.MAJOR, FilterType.EVERYTHING);
     const point = POINT_EMPTY;
     this.#newPointPresenter.init(point);
-    this.#filterModel.set(UpdateType.MAJOR, FilterType.EVERYTHING);
   };
 
   #renderTripInfo() {
@@ -203,6 +203,7 @@ export default class TripPresenter {
       presenter.destroy();
     });
     this.#pointPresenters = new Map();
+    this.#newPointPresenter.destroy();
   }
 
   #viewActionHandler = async (actionType, updateType, update) => {
@@ -269,10 +270,6 @@ export default class TripPresenter {
 
   #modeChangeHandler = () => {
     this.#pointPresenters.forEach((presenter) => presenter.resetView());
-
-    if (this.#newPointPresenter) {
-      this.#newPointPresenter.destroy();
-    }
   };
 
   #newPointButtonClickHandler = () => this.#renderNewPoint();
