@@ -54,7 +54,11 @@ export default class NewPointPresenter extends Observable{
       this.#offersModel.get());
   };
 
-  destroy = () => this.#resetClickHandler();
+  destroy = () => {
+    if (this.#pointEditComponent) {
+      this.#resetClickHandler();
+    }
+  };
 
   #resetFormState = () => {
     this.#pointEditComponent.updateElement({
@@ -92,10 +96,6 @@ export default class NewPointPresenter extends Observable{
       UpdateType.MINOR,
       updatedPoint
     );
-
-    if (!this.#pointEditComponent.isSaving || !this.#pointEditComponent.isDisabled) {
-      this.#resetClickHandler();
-    }
   };
 
   #resetClickHandler = () => {

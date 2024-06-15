@@ -3,7 +3,6 @@ import PointView from '../view/point-view.js';
 import { Mode, UpdateType, UserAction } from '../const.js';
 import { render, replace, remove } from '../framework/render.js';
 import { isEscapeKey } from '../utils/utils.js';
-import { isBigDifference } from '../utils/point-utils.js';
 import Observable from '../framework/observable.js';
 
 export default class PointPresenter extends Observable{
@@ -150,13 +149,9 @@ export default class PointPresenter extends Observable{
   #formSubmitHandler = (updatedPoint) => {
     this.#dataChangeHandler(
       UserAction.UPDATE_POINT,
-      isBigDifference(this.#point, updatedPoint) ? UpdateType.MINOR : UpdateType.PATCH,
+      UpdateType.MINOR,
       updatedPoint
     );
-
-    if (!this.#pointEditComponent.isDisabled) {
-      this.#replaceFormToPoint();
-    }
   };
 
   #deleteClickHandler = (point) => {

@@ -1,16 +1,16 @@
-export const Duration = {
+const Duration = {
   MIN: 60,
   HOUR: 10,
   DAY: 3
 };
 
-export const Mode = {
+const Mode = {
   DEFAULT: 'default',
   EDIT: 'edit',
   EMPTY_LIST: 'emptyList'
 };
 
-export const POINT_EMPTY = {
+const POINT_EMPTY = {
   basePrice: 0,
   dateFrom: null,
   dateTo: null,
@@ -20,12 +20,12 @@ export const POINT_EMPTY = {
   type: 'flight'
 };
 
-export const DateFormat = {
+const DateFormat = {
   LONG: 'YYYY-MM-DDTHH:mm',
   SHORT: 'MMM DD'
 };
 
-export const SortType = {
+const SortType = {
   DAY: 'Day',
   EVENT: 'Event',
   TIME: 'Time',
@@ -33,12 +33,12 @@ export const SortType = {
   OFFERS: 'Offers'
 };
 
-export const TimeLimit = {
+const TimeLimit = {
   LOWER_LIMIT: 350,
   UPPER_LIMIT: 1000,
 };
 
-export const PointType = {
+const PointType = {
   TAXI: 'Taxi',
   BUS: 'Bus',
   TRAIN: 'Train',
@@ -50,21 +50,21 @@ export const PointType = {
   RESTAURANT: 'Restaurant'
 };
 
-export const FilterType = {
+const FilterType = {
   EVERYTHING: 'Everything',
   FUTURE: 'Future',
   PRESENT: 'Present',
   PAST: 'Past'
 };
 
-export const UpdateType = {
+const UpdateType = {
   PATCH: 'Patch',
   MINOR: 'Minor',
   MAJOR: 'Major',
   INIT: 'Init'
 };
 
-export const ButtonLabel = {
+const ButtonLabel = {
   CANCEL: 'Cancel',
   DELETE: 'Delete',
   SAVE: 'Save',
@@ -72,26 +72,44 @@ export const ButtonLabel = {
   SAVE_IN_PROGRESS: 'Saving...'
 };
 
-export const UserAction = {
+const UserAction = {
   UPDATE_POINT: 'update',
   DELETE_POINT: 'delete',
   CREATE_POINT: 'create'
 };
 
-export const Method = {
+const Method = {
   GET: 'GET',
   PUT: 'PUT',
   POST: 'POST',
   DELETE: 'DELETE'
 };
 
-export const Filters = {
+const Filters = {
   'Everything': 'Click New Event to create your first point',
   'Future': 'There are no future events now',
   'Present': 'There are no present events now',
   'Past': 'There are no past events now'
 };
 
-export const MILLISECONDS_IN_DAY = 86400000;
+const MILLISECONDS_IN_DAY = 86400000;
 
-export const MILLISECONDS_IN_HOUR = 3600000;
+const MILLISECONDS_IN_HOUR = 3600000;
+
+export {
+  Duration,
+  Mode,
+  POINT_EMPTY,
+  DateFormat,
+  SortType,
+  TimeLimit,
+  PointType,
+  FilterType,
+  UpdateType,
+  ButtonLabel,
+  UserAction,
+  Method,
+  Filters,
+  MILLISECONDS_IN_DAY,
+  MILLISECONDS_IN_HOUR
+};
